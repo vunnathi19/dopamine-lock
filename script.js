@@ -1,99 +1,173 @@
+// script.js
 
-// INTRO DELAY
-setTimeout(function () {
-    document.getElementById("intro").style.display = "none";
-    document.querySelector(".container").classList.remove("hidden");
-}, 4000);
+let xp = 0;
 
+const loader = document.getElementById('loader');
+const authModal = document.getElementById('authModal');
+const profileModal = document.getElementById('profileModal');
+const app = document.getElementById('app');
 
-// ENTER KEY SUPPORT
-function handleKeyPress(event) {
-    if (event.key === "Enter") {
-        addTask();
-    }
+setTimeout(function(){
+
+loader.style.display = 'none';
+
+authModal.style.display = 'flex';
+
+},2000);
+
+document.getElementById('signupBtn').addEventListener('click',function(){
+
+const user = document.getElementById('username').value;
+const pass = document.getElementById('password').value;
+
+if(user === '' || pass === ''){
+
+alert('Fill all fields');
+
+return;
+
 }
 
+localStorage.setItem('user',user);
+localStorage.setItem('pass',pass);
 
-// LOAD FROM LOCALSTORAGE
-window.onload = function () {
-    let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+authModal.style.display = 'none';
 
-    savedTasks.forEach(task => {
-        createTask(task.text, task.completed);
-    });
-};
+profileModal.style.display = 'flex';
 
+});
 
-// ADD TASK
-function addTask() {
+document.getElementById('signinBtn').addEventListener('click',function(){
 
-    let taskInput = document.getElementById("taskInput");
-    let taskText = taskInput.value.trim();
+const user = document.getElementById('username').value;
+const pass = document.getElementById('password').value;
 
-    if (taskText === "") {
-        alert("Please enter a task");
-        return;
-    }
+if(
+user === localStorage.getItem('user')
+&&
+pass === localStorage.getItem('pass')
+){
 
-    createTask(taskText, false);
-    taskInput.value = "";
+authModal.style.display = 'none';
 
-    saveTasks();
+app.style.display = 'block';
+
+}
+else{
+
+alert('Wrong credentials');
+
 }
 
+});
 
-// CREATE TASK
-function createTask(taskText, completed) {
+document.getElementById('continueBtn').addEventListener('click',function(){
 
-    let li = document.createElement("li");
+const name = document.getElementById('name').value;
 
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = completed;
+const goal = document.getElementById('goal').value;
 
-    let span = document.createElement("span");
-    span.textContent = taskText;
+if(name === '' || goal === ''){
 
-    if (completed) {
-        span.classList.add("completed");
-    }
+alert('Fill all profile details');
 
-    checkbox.addEventListener("change", function () {
-        span.classList.toggle("completed", checkbox.checked);
-        saveTasks();
-    });
+return;
 
-    let delBtn = document.createElement("button");
-    delBtn.textContent = "✕";
-
-    delBtn.addEventListener("click", function () {
-        li.remove();
-        saveTasks();
-    });
-
-    li.appendChild(checkbox);
-    li.appendChild(span);
-    li.appendChild(delBtn);
-
-    document.getElementById("taskList").appendChild(li);
 }
 
+profileModal.style.display = 'none';
 
-// SAVE TO LOCALSTORAGE
-function saveTasks() {
+app.style.display = 'block';
 
-    let tasks = [];
+});
 
-    document.querySelectorAll("#taskList li").forEach(li => {
+document.getElementById('addTaskBtn').addEventListener('click',function(){
 
-        let span = li.querySelector("span");
-        let checkbox = li.querySelector("input");
+const task = document.getElementById('taskInput').value;
 
-        tasks.push({
-            text: span.textContent,
-            completed: checkbox.checked
-        });
-    });
+if(task === ''){
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+alert('Enter task');
+
+return;
+
 }
+
+const div = document.createElement('div');
+
+div.className = 'task';
+
+div.innerHTML = `
+
+<h3>${task}</h3>
+
+<p class="status">Pending</p>
+
+<input class="percent" type="number" placeholder="Completion %">
+
+<br><br>
+
+<input class="proof" type="file">
+
+<div class="progress">
+<div class="fill"></div>
+</div>
+
+<br>
+
+<button class="submitBtn">Submit Task</button>
+
+`;
+
+const submitBtn = div.querySelector('.submitBtn');
+
+submitBtn.addEventListener('click',function(){
+
+const percent =
+Number(div.querySelector('.percent').value);
+
+const proof =
+div.querySelector('.proof').files.length;
+
+if(proof === 0){
+
+alert('Upload proof');
+
+return;
+
+}
+
+const fill = div.querySelector('.fill');
+
+fill.style.width = percent + '%';
+
+if(percent >= 80){
+
+div.classList.add('finished');
+
+div.querySelector('.status').innerText = 'Completed';
+
+xp = xp + 50;
+
+document.getElementById('xp').innerText = xp;
+
+alert('+50 XP earned');
+
+}
+else{
+
+div.classList.add('unfinished');
+
+div.querySelector('.status').innerText = 'Unfinished';
+
+alert('Completion below 80%');
+
+}
+
+});
+
+document.getElementById('taskContainer').appendChild(div);
+
+document.getElementById('taskInput').value = '';
+
+});
