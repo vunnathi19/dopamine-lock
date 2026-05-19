@@ -207,3 +207,50 @@ button:hover {
         opacity: 1;
     }
 }
+li {
+
+    background: rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(10px);
+
+    margin: 15px auto;
+
+    padding: 18px;
+
+    width: 350px;
+
+    border-radius: 14px;
+
+    list-style: none;
+
+    font-size: 18px;
+
+    transition: 0.3s;
+
+    animation: fadeTask 0.5s ease;
+}
+
+li:hover {
+
+    transform: scale(1.03);
+
+    background: rgba(255, 255, 255, 0.12);
+}
+
+
+@keyframes fadeTask {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(20px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
