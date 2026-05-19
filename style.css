@@ -254,3 +254,27 @@ li:hover {
         transform: translateY(0);
     }
 }
+li {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+li input[type="checkbox"] {
+
+    width: 18px;
+
+    height: 18px;
+
+    cursor: pointer;
+}
+
+li span {
+
+    flex: 1;
+
+    text-align: left;
+}
