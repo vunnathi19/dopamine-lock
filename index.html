@@ -1,55 +1,82 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dopamine Lock</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopamine Lock</title>
 
+<link rel="stylesheet" href="style.css">
+
+</head>
 <body>
 
-    <!-- INTRO -->
-    <div id="intro">
+<div id="loader">
+<h1>Dopamine Lock</h1>
+<div class="spinner"></div>
+</div>
 
-        <h1 class="logo">Dopamine Lock</h1>
+<div id="authModal" class="modal">
+<div class="box">
 
-        <p class="tagline">
-            Earn your entertainment through discipline
-        </p>
+<h2>Sign In / Sign Up</h2>
 
-        <div class="loader"></div>
+<input id="username" placeholder="Username">
 
-    </div>
+<input id="password" type="password" placeholder="Password">
 
-    <!-- APP -->
-    <div class="container hidden">
+<button id="signupBtn">Sign Up</button>
 
-        <h1>Welcome Back</h1>
+<button id="signinBtn">Sign In</button>
 
-        <p class="subtitle">Enter your tasks and stay focused.</p>
+</div>
+</div>
 
-        <div class="task-section">
+<div id="profileModal" class="modal">
+<div class="box">
 
-            <input
-                type="text"
-                id="taskInput"
-                placeholder="Enter your task"
-                autofocus
-                onkeypress="handleKeyPress(event)"
-            >
+<h2>Create Profile</h2>
 
-            <button onclick="addTask()">Add Task</button>
+<input id="name" placeholder="Your Name">
 
-        </div>
+<input id="goal" placeholder="Your Goal">
 
-        <ul id="taskList"></ul>
+<button id="continueBtn">Continue</button>
 
-    </div>
+</div>
+</div>
 
-    <script src="script.js"></script>
+<div id="app">
+
+<header>
+<h1>Dopamine Lock</h1>
+<p>Earn dopamine through discipline</p>
+</header>
+
+<div class="xp">
+XP : <span id="xp">0</span>
+</div>
+
+<div class="board">
+
+<div class="teddy">🧸</div>
+
+<div class="taskBox">
+
+<input id="taskInput" placeholder="Add today's task">
+
+<button id="addTaskBtn">Add Task</button>
+
+</div>
+
+</div>
+
+<div id="taskContainer"></div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
-
 </html>
