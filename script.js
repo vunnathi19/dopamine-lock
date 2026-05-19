@@ -1,75 +1,44 @@
+
+// INTRO SCREEN DELAY
 setTimeout(function () {
-
-    document
-        .getElementById("intro")
-        .style.display = "none";
-
-    document
-        .querySelector(".container")
-        .classList.remove("hidden");
-
+    document.getElementById("intro").style.display = "none";
+    document.querySelector(".container").classList.remove("hidden");
 }, 4000);
 
 
-
+// ADD TASK FUNCTION
 function addTask() {
 
-    let taskInput =
-        document.getElementById("taskInput");
+    let taskInput = document.getElementById("taskInput");
+    let taskText = taskInput.value;
 
-    let taskText =
-        taskInput.value;
-
-    if(taskText === "") {
-
+    if (taskText === "") {
         alert("Please enter a task");
-
         return;
     }
 
-  let li =
-    document.createElement("li");
+    // create list item
+    let li = document.createElement("li");
 
+    // checkbox
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
 
-let checkbox =
-    document.createElement("input");
+    // text
+    let span = document.createElement("span");
+    span.textContent = taskText;
 
-checkbox.type = "checkbox";
+    // toggle completed class (IMPORTANT FIX)
+    checkbox.addEventListener("change", function () {
+        span.classList.toggle("completed", checkbox.checked);
+    });
 
+    // append elements
+    li.appendChild(checkbox);
+    li.appendChild(span);
 
-let span =
-    document.createElement("span");
+    document.getElementById("taskList").appendChild(li);
 
-span.textContent = taskText;
-
-
-checkbox.addEventListener("change", function () {
-
-    if (checkbox.checked) {
-
-        span.style.textDecoration =
-            "line-through";
-
-        span.style.opacity = "0.6";
-    }
-
-    else {
-
-        span.style.textDecoration =
-            "none";
-
-        span.style.opacity = "1";
-    }
-});
-
-
-li.appendChild(checkbox);
-
-li.appendChild(span);
-
-    document
-        .getElementById("taskList")
-        .appendChild(li);
-
+    // clear input
     taskInput.value = "";
 }
